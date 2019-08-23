@@ -84,6 +84,8 @@ public class XmlValidationModeDetector {
 	 * Note that the supplied {@link InputStream} is closed by this method before returning.
 	 * @param inputStream the InputStream to parse
 	 * @throws IOException in case of I/O failure
+	 *
+	 * 确定校验模式，Spring 检验模式的办法就是判断是否包含 DOCTYPE 如果包含就是DTD，否则就是XSD
 	 * @see #VALIDATION_DTD
 	 * @see #VALIDATION_XSD
 	 */
@@ -95,6 +97,7 @@ public class XmlValidationModeDetector {
 			String content;
 			while ((content = reader.readLine()) != null) {
 				content = consumeCommentTokens(content);
+				// 如果读取的是空行则略过
 				if (this.inComment || !StringUtils.hasText(content)) {
 					continue;
 				}
@@ -102,6 +105,7 @@ public class XmlValidationModeDetector {
 					isDtdValidated = true;
 					break;
 				}
+				// 读取到 < 开始符号，验证模式一定会在开始符号之前
 				if (hasOpeningTag(content)) {
 					// End of meaningful data...
 					break;
