@@ -48,6 +48,8 @@ import org.springframework.lang.Nullable;
  * @see ClassPathResource
  * @see ByteArrayResource
  * @see InputStreamResource
+ *
+ * 底层资源的封装
  */
 public interface Resource extends InputStreamSource {
 
@@ -56,6 +58,8 @@ public interface Resource extends InputStreamSource {
 	 * <p>This method performs a definitive existence check, whereas the
 	 * existence of a {@code Resource} handle only guarantees a valid
 	 * descriptor handle.
+	 *
+	 * 是否存在
 	 */
 	boolean exists();
 
@@ -67,6 +71,8 @@ public interface Resource extends InputStreamSource {
 	 * However, a value of {@code false} is a definitive indication
 	 * that the resource content cannot be read.
 	 * @see #getInputStream()
+	 *
+	 * 是否可读
 	 */
 	default boolean isReadable() {
 		return true;
@@ -77,6 +83,8 @@ public interface Resource extends InputStreamSource {
 	 * If {@code true}, the InputStream cannot be read multiple times,
 	 * and must be read and closed to avoid resource leaks.
 	 * <p>Will be {@code false} for typical resource descriptors.
+	 *
+	 * 资源所代表的句柄是否被一个 stream 打开了
 	 */
 	default boolean isOpen() {
 		return false;
@@ -89,6 +97,8 @@ public interface Resource extends InputStreamSource {
 	 * <p>This is conservatively {@code false} by default.
 	 * @since 5.0
 	 * @see #getFile()
+	 *
+	 * 是否为文件
 	 */
 	default boolean isFile() {
 		return false;
@@ -152,6 +162,8 @@ public interface Resource extends InputStreamSource {
 	 * @param relativePath the relative path (relative to this resource)
 	 * @return the resource handle for the relative resource
 	 * @throws IOException if the relative resource cannot be determined
+	 *
+	 * 创建相对资源
 	 */
 	Resource createRelative(String relativePath) throws IOException;
 
@@ -160,6 +172,8 @@ public interface Resource extends InputStreamSource {
 	 * part of the path: for example, "myfile.txt".
 	 * <p>Returns {@code null} if this type of resource does not
 	 * have a filename.
+	 *
+	 * 获取文件名（不带路径信息的）
 	 */
 	@Nullable
 	String getFilename();

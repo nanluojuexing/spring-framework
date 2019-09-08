@@ -41,6 +41,8 @@ import org.springframework.util.ObjectUtils;
  * @see Resource#getInputStream()
  * @see java.io.Reader
  * @see java.nio.charset.Charset
+ *
+ * 对文件资源进行编码处理
  */
 public class EncodedResource implements InputStreamSource {
 
@@ -142,9 +144,10 @@ public class EncodedResource implements InputStreamSource {
 	 * @see #getInputStream()
 	 */
 	public Reader getReader() throws IOException {
+		// 射中charset属性
 		if (this.charset != null) {
 			return new InputStreamReader(this.resource.getInputStream(), this.charset);
-		}
+		}// 设置编码属性
 		else if (this.encoding != null) {
 			return new InputStreamReader(this.resource.getInputStream(), this.encoding);
 		}

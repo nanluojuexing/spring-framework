@@ -49,6 +49,8 @@ import org.springframework.core.io.Resource;
  * @see XmlBeanDefinitionReader
  * @deprecated as of Spring 3.1 in favor of {@link DefaultListableBeanFactory} and
  * {@link XmlBeanDefinitionReader}
+ *
+ * 此类已废弃
  */
 @Deprecated
 @SuppressWarnings({"serial", "all"})
@@ -76,6 +78,7 @@ public class XmlBeanFactory extends DefaultListableBeanFactory {
 	 */
 	public XmlBeanFactory(Resource resource, BeanFactory parentBeanFactory) throws BeansException {
 		super(parentBeanFactory);
+		// 记载资源的实现
 		this.reader.loadBeanDefinitions(resource);
 	}
 

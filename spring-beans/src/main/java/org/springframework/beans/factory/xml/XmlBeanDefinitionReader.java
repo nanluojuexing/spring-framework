@@ -255,6 +255,8 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	/**
 	 * Return the EntityResolver to use, building a default resolver
 	 * if none specified.
+	 *
+	 * EntityResolver 是项目本身可以提供一个如何寻找dto的方法
 	 */
 	protected EntityResolver getEntityResolver() {
 		if (this.entityResolver == null) {
@@ -301,7 +303,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	 */
 	@Override
 	public int loadBeanDefinitions(Resource resource) throws BeanDefinitionStoreException {
-		// 封装resource  EncodedResource 用于对资源文件的编码处理
+		// 1.封装resource  EncodedResource 用于对资源文件的编码处理
 		return loadBeanDefinitions(new EncodedResource(resource));
 	}
 
@@ -328,7 +330,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 					"Detected cyclic loading of " + encodedResource + " - check your import definitions!");
 		}
 		try {
-			// 从EncodedResource 获取已经封装的 resource，并再次获取其中的 inputStream
+			// 2. 从EncodedResource 获取已经封装的 resource，并再次获取其中的 inputStream
 			InputStream inputStream = encodedResource.getResource().getInputStream();
 			try {
 				// 此类不是Spring的类，来自 org.xml.sax.InputSource
@@ -336,6 +338,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 				if (encodedResource.getEncoding() != null) {
 					inputSource.setEncoding(encodedResource.getEncoding());
 				}
+				// 3. 构造好的实例继续调用
 				return doLoadBeanDefinitions(inputSource, encodedResource.getResource());
 			}
 			finally {
@@ -391,9 +394,9 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	protected int doLoadBeanDefinitions(InputSource inputSource, Resource resource)
 			throws BeanDefinitionStoreException {
 		try {
-			// 加载xml,并获取对应的Document
+			// 5.加载xml,并获取对应的Document(第4步见方法内)
 			Document doc = doLoadDocument(inputSource, resource);
-			// 注册bean信息
+			// 6.注册bean信息
 			return registerBeanDefinitions(doc, resource);
 		}
 		catch (BeanDefinitionStoreException ex) {
@@ -431,8 +434,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	 * @see DocumentLoader#loadDocument
 	 */
 	protected Document doLoadDocument(InputSource inputSource, Resource resource) throws Exception {
-		// getValidationModeForResource 获取对 xml 文件的验证模式
-		//
+		// 4.getValidationModeForResource 获取对 xml 文件的验证模式
 		return this.documentLoader.loadDocument(inputSource, getEntityResolver(), this.errorHandler,
 				getValidationModeForResource(resource), isNamespaceAware());
 	}

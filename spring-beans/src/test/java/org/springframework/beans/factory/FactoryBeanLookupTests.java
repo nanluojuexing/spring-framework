@@ -40,6 +40,7 @@ public class FactoryBeanLookupTests {
 	public void setUp() {
 		beanFactory = new DefaultListableBeanFactory();
 		new XmlBeanDefinitionReader((BeanDefinitionRegistry) beanFactory).loadBeanDefinitions(
+				// 加载文件
 				new ClassPathResource("FactoryBeanLookupTests-context.xml", this.getClass()));
 	}
 
