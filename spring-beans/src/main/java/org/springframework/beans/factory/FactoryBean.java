@@ -54,10 +54,15 @@ import org.springframework.lang.Nullable;
  * @see org.springframework.beans.factory.BeanFactory
  * @see org.springframework.aop.framework.ProxyFactoryBean
  * @see org.springframework.jndi.JndiObjectFactoryBean
+ *
+ *
+ * 实现接口定制化bean的加载，Spring通过反射机制利用bean的class属性指定实现类来实例化bean
  */
 public interface FactoryBean<T> {
 
 	/**
+	 * 返回由FactoryBean 创建的bean实例，如果是isSingleton()返回true,则该实例会放到 spring 容器中单实例缓冲池中
+	 *
 	 * Return an instance (possibly shared or independent) of the object
 	 * managed by this factory.
 	 * <p>As with a {@link BeanFactory}, this allows support for both the
@@ -78,6 +83,8 @@ public interface FactoryBean<T> {
 	T getObject() throws Exception;
 
 	/**
+	 * 创建的bean类型
+	 *
 	 * Return the type of object that this FactoryBean creates,
 	 * or {@code null} if not known in advance.
 	 * <p>This allows one to check for specific types of beans without
@@ -100,6 +107,8 @@ public interface FactoryBean<T> {
 	Class<?> getObjectType();
 
 	/**
+	 * FactoryBean创建的实例作用域是 singleton 还是 prototype
+	 *
 	 * Is the object managed by this factory a singleton? That is,
 	 * will {@link #getObject()} always return the same object
 	 * (a reference that can be cached)?
