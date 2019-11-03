@@ -140,22 +140,46 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	@Nullable
 	private volatile Object beanClass;
 
+	/**
+	 * bean的作用范围，对应的bean属性scope
+	 */
 	@Nullable
 	private String scope = SCOPE_DEFAULT;
 
+	/**
+	 * 是否抽象
+	 */
 	private boolean abstractFlag = false;
 
+	/**
+	 * 是否延迟加载
+	 */
 	private boolean lazyInit = false;
 
+	/**
+	 * 自动注入模式，bean对应autowire属性
+	 */
 	private int autowireMode = AUTOWIRE_NO;
 
+	/**
+	 * 依赖检查
+	 */
 	private int dependencyCheck = DEPENDENCY_CHECK_NONE;
 
+	/**
+	 * 用来表示一个bean的实例化依靠另一个bean先实例化，对应属性 depend-on
+	 */
 	@Nullable
 	private String[] dependsOn;
 
+	/**
+	 * autowireCandidate 设置为false时，容器在查找自动装配对象时，将不考虑该bean,即他不会考虑为其他bean自动装配的候选者，但是该bean还是可以使用自动装配来注入其他的bean
+	 */
 	private boolean autowireCandidate = true;
 
+	/**
+	 * 自动装配时出现多个bean候选者，将作为首选着者，对应bean属性primary
+	 */
 	private boolean primary = false;
 
 	private final Map<String, AutowireCandidateQualifier> qualifiers = new LinkedHashMap<>();
@@ -163,8 +187,14 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	@Nullable
 	private Supplier<?> instanceSupplier;
 
+	/**
+	 * 允许访问非公开的构造器，程序设置
+	 */
 	private boolean nonPublicAccessAllowed = true;
 
+	/**
+	 *
+	 */
 	private boolean lenientConstructorResolution = true;
 
 	@Nullable
@@ -173,12 +203,21 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	@Nullable
 	private String factoryMethodName;
 
+	/**
+	 * 记录构造函数注入属性，对应bean属性constructor-arg
+	 */
 	@Nullable
 	private ConstructorArgumentValues constructorArgumentValues;
 
+	/**
+	 * 普通属性集合
+	 */
 	@Nullable
 	private MutablePropertyValues propertyValues;
 
+	/**
+	 * 方法重写的持有者
+	 */
 	@Nullable
 	private MethodOverrides methodOverrides;
 
@@ -192,6 +231,9 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	private boolean enforceDestroyMethod = true;
 
+	/**
+	 * 是否为用户自定义的而不是应用程序本身定义的，创建aop时为true
+	 */
 	private boolean synthetic = false;
 
 	private int role = BeanDefinition.ROLE_APPLICATION;
@@ -199,6 +241,9 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	@Nullable
 	private String description;
 
+	/**
+	 * bean资源
+	 */
 	@Nullable
 	private Resource resource;
 

@@ -319,7 +319,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 		if (logger.isInfoEnabled()) {
 			logger.info("Loading XML bean definitions from " + encodedResource);
 		}
-		//属性来记录已经加载的资源
+		//通过属性来记录已经加载的资源
 		Set<EncodedResource> currentResources = this.resourcesCurrentlyBeingLoaded.get();
 		if (currentResources == null) {
 			currentResources = new HashSet<>(4);
@@ -340,16 +340,13 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 				}
 				// 3. 构造好的实例继续调用
 				return doLoadBeanDefinitions(inputSource, encodedResource.getResource());
-			}
-			finally {
+			} finally {
 				inputStream.close();
 			}
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new BeanDefinitionStoreException(
 					"IOException parsing XML document from " + encodedResource.getResource(), ex);
-		}
-		finally {
+		} finally {
 			currentResources.remove(encodedResource);
 			if (currentResources.isEmpty()) {
 				this.resourcesCurrentlyBeingLoaded.remove();
@@ -398,27 +395,21 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 			Document doc = doLoadDocument(inputSource, resource);
 			// 6.注册bean信息
 			return registerBeanDefinitions(doc, resource);
-		}
-		catch (BeanDefinitionStoreException ex) {
+		} catch (BeanDefinitionStoreException ex) {
 			throw ex;
-		}
-		catch (SAXParseException ex) {
+		} catch (SAXParseException ex) {
 			throw new XmlBeanDefinitionStoreException(resource.getDescription(),
 					"Line " + ex.getLineNumber() + " in XML document from " + resource + " is invalid", ex);
-		}
-		catch (SAXException ex) {
+		} catch (SAXException ex) {
 			throw new XmlBeanDefinitionStoreException(resource.getDescription(),
 					"XML document from " + resource + " is invalid", ex);
-		}
-		catch (ParserConfigurationException ex) {
+		} catch (ParserConfigurationException ex) {
 			throw new BeanDefinitionStoreException(resource.getDescription(),
 					"Parser configuration exception parsing XML from " + resource, ex);
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new BeanDefinitionStoreException(resource.getDescription(),
 					"IOException parsing XML document from " + resource, ex);
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			throw new BeanDefinitionStoreException(resource.getDescription(),
 					"Unexpected exception parsing XML document from " + resource, ex);
 		}

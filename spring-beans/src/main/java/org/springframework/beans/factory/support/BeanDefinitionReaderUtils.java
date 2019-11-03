@@ -63,8 +63,7 @@ public class BeanDefinitionReaderUtils {
 			if (classLoader != null) {
 				// 如果classloader 不为空，则使用以传入的 classloader 同一虚拟机加载类对象，否则只是记录className
 				bd.setBeanClass(ClassUtils.forName(className, classLoader));
-			}
-			else {
+			} else {
 				bd.setBeanClassName(className);
 			}
 		}
@@ -142,15 +141,11 @@ public class BeanDefinitionReaderUtils {
 	 * @param registry the bean factory to register with
 	 * @throws BeanDefinitionStoreException if registration failed
 	 */
-	public static void registerBeanDefinition(
-			BeanDefinitionHolder definitionHolder, BeanDefinitionRegistry registry)
-			throws BeanDefinitionStoreException {
-
+	public static void registerBeanDefinition(BeanDefinitionHolder definitionHolder, BeanDefinitionRegistry registry) throws BeanDefinitionStoreException {
 		// Register bean definition under primary name.
 		// 使用beanName 作为唯一标识注册
 		String beanName = definitionHolder.getBeanName();
 		registry.registerBeanDefinition(beanName, definitionHolder.getBeanDefinition());
-
 		// Register aliases for bean name, if any.
 		// 注册所有的别名
 		String[] aliases = definitionHolder.getAliases();

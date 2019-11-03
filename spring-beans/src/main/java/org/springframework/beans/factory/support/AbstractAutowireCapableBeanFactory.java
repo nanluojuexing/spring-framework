@@ -164,6 +164,10 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 	/**
 	 * Create a new AbstractAutowireCapableBeanFactory.
+	 *
+	 * ignoreDependencyInterface（） 当存在 A 中有属性B的时候，Spring默认会自动初始化，某些情况下B不会被初始化；
+	 * 其中就是实现了BeanNameWare接口，这里需要通过上下文 application 注册依赖 类型BeanFactory
+	 * 通过 BeanFactoryAware进行注入或者 ApplicationContext 通过ApplicationContextAware进行注册
 	 */
 	public AbstractAutowireCapableBeanFactory() {
 		super();

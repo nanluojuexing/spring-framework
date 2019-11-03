@@ -124,8 +124,7 @@ public class DefaultNamespaceHandlerResolver implements NamespaceHandlerResolver
 		}// 已经做过解析的，直接从缓存中读取
 		else if (handlerOrClassName instanceof NamespaceHandler) {
 			return (NamespaceHandler) handlerOrClassName;
-		}
-		else {// 没有解析的返回 类路径
+		} else {// 没有解析的返回 类路径
 			String className = (String) handlerOrClassName;
 			try {
 				// 反射加载对应的类
@@ -141,12 +140,10 @@ public class DefaultNamespaceHandlerResolver implements NamespaceHandlerResolver
 				// 记录在缓存
 				handlerMappings.put(namespaceUri, namespaceHandler);
 				return namespaceHandler;
-			}
-			catch (ClassNotFoundException ex) {
+			} catch (ClassNotFoundException ex) {
 				throw new FatalBeanException("Could not find NamespaceHandler class [" + className +
 						"] for namespace [" + namespaceUri + "]", ex);
-			}
-			catch (LinkageError err) {
+			} catch (LinkageError err) {
 				throw new FatalBeanException("Unresolvable class definition for NamespaceHandler class [" +
 						className + "] for namespace [" + namespaceUri + "]", err);
 			}
@@ -167,7 +164,7 @@ public class DefaultNamespaceHandlerResolver implements NamespaceHandlerResolver
 						logger.debug("Loading NamespaceHandler mappings from [" + this.handlerMappingsLocation + "]");
 					}
 					try {
-						//
+						// 将properties格式文件合并到map格式 handlerMappings 中
 						Properties mappings = PropertiesLoaderUtils.loadAllProperties(this.handlerMappingsLocation, this.classLoader);
 						if (logger.isDebugEnabled()) {
 							logger.debug("Loaded NamespaceHandler mappings: " + mappings);
@@ -175,8 +172,7 @@ public class DefaultNamespaceHandlerResolver implements NamespaceHandlerResolver
 						handlerMappings = new ConcurrentHashMap<>(mappings.size());
 						CollectionUtils.mergePropertiesIntoMap(mappings, handlerMappings);
 						this.handlerMappings = handlerMappings;
-					}
-					catch (IOException ex) {
+					} catch (IOException ex) {
 						throw new IllegalStateException(
 								"Unable to load NamespaceHandler mappings from location [" + this.handlerMappingsLocation + "]", ex);
 					}

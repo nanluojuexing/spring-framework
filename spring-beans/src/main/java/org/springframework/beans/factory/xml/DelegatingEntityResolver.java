@@ -79,20 +79,17 @@ public class DelegatingEntityResolver implements EntityResolver {
 
 	@Override
 	@Nullable
-	public InputSource resolveEntity(@Nullable String publicId, @Nullable String systemId)
-			throws SAXException, IOException {
+	public InputSource resolveEntity(@Nullable String publicId, @Nullable String systemId) throws SAXException, IOException {
 
 		if (systemId != null) {
 			if (systemId.endsWith(DTD_SUFFIX)) {
 				// 如果是dtd 从这里解析
 				return this.dtdResolver.resolveEntity(publicId, systemId);
-			}
-			else if (systemId.endsWith(XSD_SUFFIX)) {
+			} else if (systemId.endsWith(XSD_SUFFIX)) {
 				// 通过调用 META-INF/spring.schemas解析
 				return this.schemaResolver.resolveEntity(publicId, systemId);
 			}
 		}
-
 		// Fall back to the parser's default behavior.
 		return null;
 	}
