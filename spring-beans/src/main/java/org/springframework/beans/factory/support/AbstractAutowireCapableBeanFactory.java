@@ -1244,6 +1244,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 						getInstantiationStrategy().instantiate(mbd, beanName, parent),
 						getAccessControlContext());
 			} else {
+				// 这里是核心
 				beanInstance = getInstantiationStrategy().instantiate(mbd, beanName, parent);
 			}
 			BeanWrapper bw = new BeanWrapperImpl(beanInstance);

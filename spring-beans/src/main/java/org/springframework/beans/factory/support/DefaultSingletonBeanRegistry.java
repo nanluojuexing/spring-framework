@@ -200,7 +200,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 					// 当某些方法需要提前初始化的时候，则调用 addSingletonFactory 方法将对应的 ObjectFactory 初始化策略存储在 singletonFactories
 					ObjectFactory<?> singletonFactory = this.singletonFactories.get(beanName);
 					if (singletonFactory != null) {
-						//
+						// 创建bean
 						singletonObject = singletonFactory.getObject();
 						// 记录缓存 earlySingletonObjects 与 singletonFactories 互斥
 						this.earlySingletonObjects.put(beanName, singletonObject);
@@ -226,7 +226,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 		Assert.notNull(beanName, "Bean name must not be null");
 		// 全局变量需要同步
 		synchronized (this.singletonObjects) {
-			// 先检车对应的bean是否已经加载过，singleton模式其实就是复用以创建的bean
+			// 先检查对应的bean是否已经加载过，singleton模式其实就是复用以创建的bean
 			Object singletonObject = this.singletonObjects.get(beanName);
 			// 未创建才可以 singleton的bean的初始化
 			if (singletonObject == null) {

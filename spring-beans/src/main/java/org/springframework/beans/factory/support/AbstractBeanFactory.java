@@ -257,14 +257,13 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 		// 1.提取转换对应的beanName，这里name可能是别名也可能是 factoryBean
 		final String beanName = transformedBeanName(name);
 		Object bean;
-
 		// Eagerly check singleton cache for manually registered singletons.
 		/**
 		 * 2.检查缓存工厂中是否有对应的实例
 		 *  创建单例bean的时候会存在依赖注入的情况，创建的时候为了避免循环依赖，spring创建bean的原则就是不等bean的创建完成就会将bean的ObjectFactory提前曝光
 		 *  将 ObjectFactory 加入到缓存中，一旦下一个bean创建时需要依赖于上个bean则直接使用 ObjectFactory
 		 */
-		// 从缓存充获取 或者 singletonFactories 中的 ObjectFactory 中获取
+		// 2.从缓存充获取 或者 singletonFactories 中的 ObjectFactory 中获取
 		Object sharedInstance = getSingleton(beanName);
 		if (sharedInstance != null && args == null) {
 			if (logger.isDebugEnabled()) {
@@ -275,7 +274,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 					logger.debug("Returning cached instance of singleton bean '" + beanName + "'");
 				}
 			}
-			//3. 返回对应的实例，存在 BeanFactory 的情况并不是直接返回实例本身而是返回指定方法返回的实例 ？
+			//3. 返回对应的实例，存在 BeanFactory 的情况并不是直接返回实例本身而是返回指定方法返回的实例
 			bean = getObjectForBeanInstance(sharedInstance, name, beanName, null);
 		} else {
 			/**
@@ -375,8 +374,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 							beforePrototypeCreation(beanName);
 							try {
 								return createBean(beanName, mbd, args);
-							}
-							finally {
+							} finally {
 								afterPrototypeCreation(beanName);
 							}
 						});
@@ -393,7 +391,6 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 				throw ex;
 			}
 		}
-
 		// Check if required type matches the type of the actual bean instance.
 		//9. 检查需要的类型是否符合 bean 的实际类型
 		if (requiredType != null && !requiredType.isInstance(bean)) {

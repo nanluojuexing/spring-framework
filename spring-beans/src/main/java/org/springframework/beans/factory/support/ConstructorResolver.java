@@ -184,10 +184,10 @@ class ConstructorResolver {
 
 			for (Constructor<?> candidate : candidates) {
 				Class<?>[] paramTypes = candidate.getParameterTypes();
-
 				if (constructorToUse != null && argsToUse.length > paramTypes.length) {
 					// Already found greedy constructor that can be satisfied ->
 					// do not look any further, there are only less greedy constructors left.
+					// 如果已经找到选用的构造函数或者需要的参数个数小于当前的构造函数参数个数，则中止，已经按照参数个数降序排列
 					break;
 				}
 				if (paramTypes.length < minNrOfArgs) {
@@ -199,7 +199,7 @@ class ConstructorResolver {
 				//有参数，则根据值构造对应参数类型的参数
 				if (resolvedValues != null) {
 					try {
-						// 注释上，获取参数名称
+						// 注释上获取参数名称
 						String[] paramNames = ConstructorPropertiesChecker.evaluate(candidate, paramTypes.length);
 						if (paramNames == null) {
 							// 获取参数名称探索
@@ -209,6 +209,7 @@ class ConstructorResolver {
 								paramNames = pnd.getParameterNames(candidate);
 							}
 						}
+						// 根据参数名称和数据类型
 						argsHolder = createArgumentArray(beanName, mbd, resolvedValues, bw, paramTypes, paramNames,
 								getUserDeclaredConstructor(candidate), autowiring);
 					} catch (UnsatisfiedDependencyException ex) {
@@ -227,10 +228,10 @@ class ConstructorResolver {
 					// Explicit arguments given -> arguments length must match exactly.
 					if (paramTypes.length != explicitArgs.length) {
 						continue;
-					}
+					}// 构造函数没有参数的情况
 					argsHolder = new ArgumentsHolder(explicitArgs);
 				}
-
+				// 探测是否不确定性的构造函数存在，例如不同构造函数的参数为父子关系
 				int typeDiffWeight = (mbd.isLenientConstructorResolution() ?
 						argsHolder.getTypeDifferenceWeight(paramTypes) : argsHolder.getAssignabilityWeight(paramTypes));
 				// Choose this constructor if it represents the closest match.

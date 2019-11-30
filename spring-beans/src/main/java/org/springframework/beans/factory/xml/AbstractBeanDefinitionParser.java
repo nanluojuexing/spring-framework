@@ -86,8 +86,7 @@ public abstract class AbstractBeanDefinitionParser implements BeanDefinitionPars
 					postProcessComponentDefinition(componentDefinition);
 					parserContext.registerComponent(componentDefinition);
 				}
-			}
-			catch (BeanDefinitionStoreException ex) {
+			} catch (BeanDefinitionStoreException ex) {
 				String msg = ex.getMessage();
 				parserContext.getReaderContext().error((msg != null ? msg : ex.toString()), element);
 				return null;

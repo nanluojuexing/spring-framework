@@ -88,8 +88,7 @@ public abstract class NamespaceHandlerSupport implements NamespaceHandler {
 		// 注册解析器
 		BeanDefinitionParser parser = this.parsers.get(localName);
 		if (parser == null) {
-			parserContext.getReaderContext().fatal(
-					"Cannot locate BeanDefinitionParser for element [" + localName + "]", element);
+			parserContext.getReaderContext().fatal("Cannot locate BeanDefinitionParser for element [" + localName + "]", element);
 		}
 		return parser;
 	}

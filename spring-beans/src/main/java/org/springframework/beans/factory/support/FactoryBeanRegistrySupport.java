@@ -114,12 +114,10 @@ public abstract class FactoryBeanRegistrySupport extends DefaultSingletonBeanReg
 							beforeSingletonCreation(beanName);
 							try {
 								object = postProcessObjectFromFactoryBean(object, beanName);
-							}
-							catch (Throwable ex) {
+							} catch (Throwable ex) {
 								throw new BeanCreationException(beanName,
 										"Post-processing of FactoryBean's singleton object failed", ex);
-							}
-							finally {
+							} finally {
 								afterSingletonCreation(beanName);
 							}
 						}
@@ -136,8 +134,7 @@ public abstract class FactoryBeanRegistrySupport extends DefaultSingletonBeanReg
 				try {
 					//调用ObjectFactory的后处理器
 					object = postProcessObjectFromFactoryBean(object, beanName);
-				}
-				catch (Throwable ex) {
+				} catch (Throwable ex) {
 					throw new BeanCreationException(beanName, "Post-processing of FactoryBean's object failed", ex);
 				}
 			}

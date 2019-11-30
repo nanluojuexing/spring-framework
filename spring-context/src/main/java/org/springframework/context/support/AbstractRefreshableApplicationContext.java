@@ -122,6 +122,9 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 	 */
 	@Override
 	protected final void refreshBeanFactory() throws BeansException {
+		// 如果 ApplicationContext 中已经加载过 BeanFactory 了，销毁所有 Bean，关闭 BeanFactory
+		// 注意，应用中 BeanFactory 本来就是可以多个的，这里可不是说应用全局是否有 BeanFactory，而是当前
+		// ApplicationContext 是否有 BeanFactory
 		if (hasBeanFactory()) {
 			destroyBeans();
 			closeBeanFactory();
@@ -132,15 +135,13 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 			// 指定序列化id,需要的化，将这个 beanFactory 从id反序列化到 beanFactory 对象
 			beanFactory.setSerializationId(getId());
 			// 定制 beanFactory，设置相关属性，包括是否允许覆盖同名称的不同定义的对象及循环依赖以及 @Autowired 和@Qualifier 注解解析器
-			//
 			customizeBeanFactory(beanFactory);
 			// 初始化documentReader，解析xml
 			loadBeanDefinitions(beanFactory);
 			synchronized (this.beanFactoryMonitor) {
 				this.beanFactory = beanFactory;
 			}
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new ApplicationContextException("I/O error parsing bean definition source for " + getDisplayName(), ex);
 		}
 	}

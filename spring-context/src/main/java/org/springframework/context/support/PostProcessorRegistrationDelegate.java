@@ -65,8 +65,7 @@ final class PostProcessorRegistrationDelegate {
 							(BeanDefinitionRegistryPostProcessor) postProcessor;
 					registryProcessor.postProcessBeanDefinitionRegistry(registry);
 					registryProcessors.add(registryProcessor);
-				}
-				else {
+				} else {
 					regularPostProcessors.add(postProcessor);
 				}
 			}

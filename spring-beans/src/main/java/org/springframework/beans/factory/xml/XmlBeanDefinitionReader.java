@@ -319,7 +319,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 		if (logger.isInfoEnabled()) {
 			logger.info("Loading XML bean definitions from " + encodedResource);
 		}
-		//通过属性来记录已经加载的资源
+		// ThreadLocal 通过属性来记录已经加载的资源
 		Set<EncodedResource> currentResources = this.resourcesCurrentlyBeingLoaded.get();
 		if (currentResources == null) {
 			currentResources = new HashSet<>(4);
@@ -499,7 +499,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	 * {@code registerBeanDefinitions} on it.
 	 * @param doc the DOM document
 	 * @param resource the resource descriptor (for context information)
-	 * @return the number of bean definitions found
+	 * @return the number of bean definitions found 加载的bean数量
 	 * @throws BeanDefinitionStoreException in case of parsing errors
 	 * @see #loadBeanDefinitions
 	 * @see #setDocumentReaderClass
